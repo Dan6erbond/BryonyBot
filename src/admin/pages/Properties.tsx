@@ -1,7 +1,7 @@
 import { faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Button, Container, ListGroup } from "react-bootstrap";
+import { Button, Container, ListGroup, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { bindActionCreators, compose, Dispatch } from "redux";
@@ -17,12 +17,31 @@ interface PropertiesProps {
 }
 
 function Properties({ firebase, properties, setProperties }: PropertiesProps) {
+  const [loading, setLoading] = React.useState(false);
+
   React.useEffect(() => {
-    if (!properties || properties.length === 0) {
-      firebase!.getProperties().then(setProperties);
-    }
+    (async () => {
+      if (!properties || properties.length === 0) {
+        setLoading(true);
+        const p = await firebase!.getProperties();
+        setProperties(p);
+        setLoading(false);
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading) {
+    return (
+      <Container fluid className="p-2">
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container fluid className="p-2">
@@ -35,21 +54,20 @@ function Properties({ firebase, properties, setProperties }: PropertiesProps) {
         </div>
       </div>
       <ListGroup>
-        {properties
-          .map((property) => (
-            <ListGroup.Item
-              action
-              key={property.docRef!.id}
-              as={Link}
-              to={"/admin/properties/edit/" + property.docRef?.id}
-              className="d-flex justify-content-between align-items-center"
-            >
-              {property.name}
-              <Button variant="link">
-                <FontAwesomeIcon icon={faEdit} />
-              </Button>
-            </ListGroup.Item>
-          ))}
+        {properties.map((property) => (
+          <ListGroup.Item
+            action
+            key={property.docRef!.id}
+            as={Link}
+            to={"/admin/properties/edit/" + property.docRef?.id}
+            className="d-flex justify-content-between align-items-center"
+          >
+            {property.name}
+            <Button variant="link">
+              <FontAwesomeIcon icon={faEdit} />
+            </Button>
+          </ListGroup.Item>
+        ))}
       </ListGroup>
     </Container>
   );
