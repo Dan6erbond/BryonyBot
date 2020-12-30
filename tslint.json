@@ -15,6 +15,7 @@
       ["@", "@public", "@main", "@models", "@renderer", "@utils"]
     ],
     "no-import-side-effect": false,
-    "no-increment-decrement": ["allow-for-loops"]
+    "no-increment-decrement": ["allow-for-loops"],
+    "no-relative-imports": false,
   }
 }
