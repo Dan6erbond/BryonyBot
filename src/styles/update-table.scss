@@ -1,0 +1,72 @@
+@import "_variables.scss";
+$cell-margin: 3px;
+
+.update-title {
+  background: $rockstar-darkgrey-transparent;
+  margin-bottom: $cell-margin;
+  padding: 0.25rem;
+}
+
+.update-table {
+  position: relative;
+}
+
+.update-table__row {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 1.8rem;
+
+  &:nth-last-child(2) .update-table__cell {
+    margin-bottom: 0;
+  }
+}
+
+.update-table__column {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
+
+  &:first-of-type {
+    margin-right: $cell-margin;
+    text-align: center;
+  }
+}
+
+.update-table__cell {
+  background: $rockstar-darkgrey-transparent;
+  color: #fff;
+  margin-bottom: $cell-margin;
+  padding: 0.25rem;
+  padding-left: 1rem;
+  transition: .25s all;  
+  width: 100%;
+
+  & a {
+    display: block;
+  }
+}
+
+.update-table__column:nth-child(1) .update-table__cell {
+  font-weight: bold;
+}
+
+.update-table__column:nth-child(2) .update-table__cell {
+  cursor: pointer;
+
+  &:hover {
+    background: white;
+    color: #333;
+  }
+}
+
+@media screen and (min-width: 764px) {
+  .update-table__row {
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+  .update-table__column:first-of-type {
+    text-align: left;
+    width: 25%;
+  }
+}

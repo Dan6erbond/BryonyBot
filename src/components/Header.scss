@@ -1,7 +1,12 @@
 nav.navbar {
-  background-color: #000;
-  position: fixed;
+  background-color: transparent;
+  color: white;
   top: 0;
   width: 100%;
-  z-index: 999;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white !important;
 }

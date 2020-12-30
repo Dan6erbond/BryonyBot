@@ -34,7 +34,7 @@ function Header({
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" variant="dark">
+    <Navbar collapseOnSelect expand="lg">
       <Navbar.Brand as={Link} to="/">
         <img
           alt="GTAOnline Weekly Updates"

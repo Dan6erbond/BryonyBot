@@ -16,8 +16,8 @@ function UpdateActivityElement({ activity }: UpdateActivityElementProps) {
 
   return (
     <React.Fragment>
-      <li onClick={handleShow}>
-        <FontAwesomeIcon icon={faInfoCircle} />
+      <div onClick={handleShow}>
+        {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
         <span>
           {activity.moneyAmount === activity.rpAmount
             ? activity.moneyAmount + "x GTA$ and RP"
@@ -27,7 +27,7 @@ function UpdateActivityElement({ activity }: UpdateActivityElementProps) {
               "x RP"}{" "}
           on {activity.name + " "}
         </span>
-      </li>
+      </div>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>{activity.name}</Modal.Title>

@@ -7,17 +7,31 @@ $rockstar-yellow: #f99c1c;
   right: 0;
   bottom: 0;
   z-index: -100;
-  background-color: #f99c1c;
   background-image: url("/res/img/orange-blaine-county.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
+}
+.background::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.updates {
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 100%;
 }
 
 .update {
+  // background: rgba(51,51,51,0.75);
+  color: white;
   margin-bottom: 4rem;
 
-  /* set margin on external link icons so they 
+  /* set margin on external link icons so they
   may be used freely within .update */
   & [data-icon="external-link-alt"] {
     margin-left: 0.5rem;
@@ -27,7 +41,6 @@ $rockstar-yellow: #f99c1c;
     margin-bottom: 1rem;
   }
 }
-
 
 .update [data-icon="external-link-alt"] {
   margin-left: 0.5rem;
@@ -49,11 +62,11 @@ $rockstar-yellow: #f99c1c;
 
   /* event is applied to <li>, so give it hover */
   &:hover > span {
-    background: #FDCD82;
+    background: #fdcd82;
   }
   & > span {
     padding: 0 0.5rem;
-    transition: .25s all;
+    transition: 0.25s all;
   }
 }
 .update-item-list > li .svg-inline--fa {
@@ -74,10 +87,9 @@ $rockstar-yellow: #f99c1c;
 .update-title__topic {
   font-size: 0.9rem;
   color: #ccc;
-}
-.update-title__topic {
   order: 2;
 }
+
 .update-title__date {
   order: 1;
   font-size: 1.4rem;
@@ -90,13 +102,14 @@ $rockstar-yellow: #f99c1c;
 .update-title__link--text {
   font-size: 0.9rem;
 }
-@media screen and (min-width:768px) {
+@media screen and (min-width: 768px) {
   .update-title {
     justify-content: space-between;
   }
   .update-title__topic {
     order: 1;
     width: auto;
+    padding-left: 15px;
   }
   .update-title__date {
     order: 2;
@@ -107,4 +120,3 @@ $rockstar-yellow: #f99c1c;
     width: auto;
   }
 }
-

@@ -1,0 +1,9 @@
+/* Override styles for Bootstrap Modal component */
+.modal-content {
+  background: rgb(51, 51, 51) !important;
+  color: white;
+}
+
+.modal button.close {
+  color: white;
+}
