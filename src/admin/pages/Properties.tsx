@@ -29,7 +29,7 @@ function Properties({ firebase, properties, setProperties }: PropertiesProps) {
       <div className="admin-header">
         <h1>Properties</h1>
         <div className="d-flex align-items-center mb-3">
-          <Button variant="outline-dark" as={Link} to="/admin/updates/edit">
+          <Button variant="outline-dark" as={Link} to="/admin/properties/edit">
             <FontAwesomeIcon icon={faPlusCircle} /> New property
           </Button>
         </div>
