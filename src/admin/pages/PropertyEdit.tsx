@@ -222,6 +222,68 @@ const PropertyEdit = ({
   );
 };
 
+interface AddLocationModalProps extends ModalProps {
+  addLocation: (location: PropertyLocation) => void;
+  handleClose: () => void;
+}
+
+const AddLocationModal = ({
+  addLocation,
+  handleClose,
+  ...props
+}: AddLocationModalProps) => {
+  const { register, handleSubmit } = useForm<PropertyLocation>();
+
+  return (
+    <Modal {...props} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Add Location</Modal.Title>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(addLocation)}>
+        <Modal.Body>
+          <Form.Row className="mb-2">
+            <Form.Group as={Col}>
+              <Form.Label>Name *</Form.Label>
+              <Form.Control placeholder="Name" name="name" ref={register} />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-2">
+            <Form.Group as={Col}>
+              <Form.Label>Image</Form.Label>
+              <Form.Control placeholder="Image" name="img" ref={register} />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-2">
+            <Form.Group as={Col}>
+              <Form.Label>URL</Form.Label>
+              <Form.Control placeholder="URL" name="url" ref={register} />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-2">
+            <Form.Group as={Col}>
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                placeholder="Price"
+                name="price"
+                type="number"
+                ref={register}
+              />
+            </Form.Group>
+          </Form.Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit">
+            Add
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+  );
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
