@@ -74,7 +74,7 @@ const PropertyEdit = ({
   );
 
   const saveProperty = React.useCallback(
-    _.debounce(async () => {
+    _.debounce(async (property: Property) => {
       const { docRef, locations, ...p } = property;
       setSaving(true);
       if (docRef) {
@@ -91,7 +91,7 @@ const PropertyEdit = ({
         setProperty(_p);
       }
     }, 500),
-    [setSaving, property, setStateProperty, setProperty]
+    [setSaving, setStateProperty, setProperty]
   );
 
   React.useEffect(() => {
@@ -128,24 +128,30 @@ const PropertyEdit = ({
 
   const onSubmit = React.useCallback(
     (data: any) => {
-      setStateProperty({
-        ...property,
-        ...data,
+      setStateProperty((property) => {
+        const p = {
+          ...property,
+          ...data,
+        };
+        saveProperty(p);
+        return p;
       });
-      saveProperty();
     },
-    [saveProperty, property]
+    [saveProperty]
   );
 
   const onChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setStateProperty({
-        ...property,
-        [e.target.name]: e.target.value,
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+      setStateProperty((property) => {
+        const p = {
+          ...property,
+          [target.name]: target.value,
+        };
+        saveProperty(p);
+        return p;
       });
-      saveProperty();
     },
-    [saveProperty, setStateProperty, property]
+    [saveProperty, setStateProperty]
   );
 
   const addLocation = React.useCallback(
@@ -153,20 +159,22 @@ const PropertyEdit = ({
       setSaving(true);
       const { docRef, ...l } = location;
       const ref = await property.docRef!.collection("locations").add(l);
-      const p = {
-        ...property,
-        locations: [
-          ...property.locations,
-          {
-            ...location,
-            docRef: ref,
-          },
-        ],
-      };
-      setProperty(p);
-      setStateProperty(p);
-      setShowLocationModal(false);
-      setSaving(false);
+      setStateProperty((property) => {
+        const p = {
+          ...property,
+          locations: [
+            ...property.locations,
+            {
+              ...location,
+              docRef: ref,
+            },
+          ],
+        };
+        setProperty(p);
+        setShowLocationModal(false);
+        setSaving(false);
+        return p;
+      });
     },
     [setStateProperty, setProperty, property]
   );
@@ -312,7 +320,10 @@ const PropertyEdit = ({
               </div>
               <ListGroup className="mt-2">
                 {property.locations.map((location) => (
-                  <ListGroup.Item className="p-0 d-flex" key={location.docRef!.id}>
+                  <ListGroup.Item
+                    className="p-0 d-flex"
+                    key={location.docRef!.id}
+                  >
                     <Image
                       src={location.img}
                       thumbnail
