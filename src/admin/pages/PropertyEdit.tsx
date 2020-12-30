@@ -188,6 +188,21 @@ const PropertyEdit = ({
     [setStateProperty, setProperty, property]
   );
 
+  const handleImageCopy = React.useCallback(
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+      if (target.value.split(".").length) {
+        const parts = target.value.split(".");
+        parts[parts.length - 1] = parts[parts.length - 1].split("/")[0];
+        setValue(target.name, parts.join("."));
+        setStateProperty((p) => ({
+          ...p,
+          [target.name]: parts.join("."),
+        }));
+      }
+    },
+    [setValue]
+  );
+
   if (match.params.id && !propertyExists) {
     return (
       <Container fluid>
@@ -247,7 +262,10 @@ const PropertyEdit = ({
                 placeholder="Image"
                 name="img"
                 ref={register}
-                onChange={onChange}
+                onChange={(e) => {
+                  onChange(e as any);
+                  handleImageCopy(e as any);
+                }}
               />
             </Form.Group>
           </Form.Row>
@@ -355,7 +373,18 @@ const AddLocationModal = ({
   handleClose,
   ...props
 }: AddLocationModalProps) => {
-  const { register, handleSubmit } = useForm<PropertyLocation>();
+  const { register, handleSubmit, setValue } = useForm<PropertyLocation>();
+
+  const handleImageCopy = React.useCallback(
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+      if (target.value.split(".").length) {
+        const parts = target.value.split(".");
+        parts[parts.length - 1] = parts[parts.length - 1].split("/")[0];
+        setValue(target.name, parts.join("."));
+      }
+    },
+    [setValue]
+  );
 
   return (
     <Modal {...props} onHide={handleClose}>
@@ -373,7 +402,12 @@ const AddLocationModal = ({
           <Form.Row className="mb-2">
             <Form.Group as={Col}>
               <Form.Label>Image</Form.Label>
-              <Form.Control placeholder="Image" name="img" ref={register} />
+              <Form.Control
+                placeholder="Image"
+                name="img"
+                ref={register}
+                onChange={handleImageCopy}
+              />
             </Form.Group>
           </Form.Row>
           <Form.Row className="mb-2">
