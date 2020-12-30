@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { RootState } from ".";
 import { UpdateItem } from "../models/update";
 
-/*
+/**
  * Vehicle selectors
  */
 
@@ -30,7 +30,7 @@ export const getVehiclesAsSearchInputOptions = createSelector(
     }))
 );
 
-/*
+/**
  * Property selectors
  */
 
@@ -83,7 +83,7 @@ export const getPropertiesAsSearchInputOptions = createSelector(
     }))
 );
 
-/*
+/**
  * Mission selectors
  */
 
