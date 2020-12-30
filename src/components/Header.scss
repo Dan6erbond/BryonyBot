@@ -7,6 +7,12 @@ nav.navbar {
   margin: 0 auto;
 }
 
+.admin {
+  nav.navbar {
+    background-color: black;
+  }
+}
+
 .navbar-light .navbar-nav .nav-link {
   color: white !important;
 }

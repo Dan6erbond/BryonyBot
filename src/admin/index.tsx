@@ -10,6 +10,13 @@ import Updates from "./pages/Updates";
 import VehicleEdit from "./pages/VehicleEdit";
 
 function Admin() {
+  React.useEffect(() => {
+    document.body.classList.add("admin");
+    return () => {
+      document.body.classList.remove("admin");
+    };
+  });
+
   return (
     <Container fluid className="p-0 h-100 admin">
       <Row className="h-100 align-items-stretch">
