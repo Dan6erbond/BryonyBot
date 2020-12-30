@@ -9,7 +9,7 @@ import {
   FormControl,
   InputGroup,
   ListGroup,
-  Spinner
+  Spinner,
 } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { connect } from "react-redux";
@@ -19,19 +19,22 @@ import Snoowrap, { SnoowrapOptions } from "snoowrap";
 import SearchInput, { SearchInputOption } from "../../components/SearchInput";
 import Firebase, { withFirebase } from "../../Firebase";
 import { Mission } from "../../models/mission";
+import { Property } from "../../models/property";
 import Update, {
   BonusActivity,
   SaleItem,
-  UpdateItem
+  UpdateItem,
 } from "../../models/update";
 import UpdatePost from "../../models/UpdatePost";
 import { Vehicle } from "../../models/vehicle";
 import { RootState } from "../../store";
 import { setMissions } from "../../store/Missions";
+import { setProperties } from "../../store/Properties";
 import { setRedditClient } from "../../store/Reddit";
 import {
   getMissionsAsSearchInputOptions,
-  getVehiclesAsSearchInputOptions
+  getVehiclesAsSearchInputOptions,
+  getPropertiesAsSearchInputOptions,
 } from "../../store/selectors";
 import { setUpdate, setUpdates } from "../../store/Updates";
 import { setVehicles } from "../../store/Vehicles";
@@ -55,6 +58,9 @@ interface UpdateEditProps extends RouteComponentProps<UpdateEditMatch> {
   missions: Mission[];
   missionSearchInputOptions: SearchInputOption[];
   setMissions: typeof setMissions;
+  properties: Property[];
+  propertySearchInputOptions: SearchInputOption[];
+  setProperties: typeof setProperties;
   redditClient: Snoowrap;
   setRedditClient: typeof setRedditClient;
 }
@@ -430,7 +436,13 @@ class UpdateEdit extends React.Component<UpdateEditProps, UpdateEditState> {
       match,
       vehicleSearchInputOptions,
       missionSearchInputOptions,
+      propertySearchInputOptions,
     } = this.props;
+
+    const updateItemSearchInputOptions = [
+      ...vehicleSearchInputOptions,
+      ...propertySearchInputOptions,
+    ];
 
     return (
       <Container fluid>
@@ -488,7 +500,7 @@ class UpdateEdit extends React.Component<UpdateEditProps, UpdateEditState> {
                   <Form.Label>New</Form.Label>
                   <SearchInput
                     multi
-                    options={vehicleSearchInputOptions}
+                    options={updateItemSearchInputOptions}
                     onSelect={(option) => this.setItem("new", option.value)}
                   />
                   <ListGroup className="mt-2">
@@ -528,7 +540,7 @@ class UpdateEdit extends React.Component<UpdateEditProps, UpdateEditState> {
                   <Form.Label>Sale</Form.Label>
                   <SearchInput
                     multi
-                    options={vehicleSearchInputOptions}
+                    options={updateItemSearchInputOptions}
                     onSelect={(option) =>
                       this.setItem("sale", { ...option.value, amount: 10 })
                     }
@@ -549,7 +561,7 @@ class UpdateEdit extends React.Component<UpdateEditProps, UpdateEditState> {
                   <Form.Label>Twitch Prime</Form.Label>
                   <SearchInput
                     multi
-                    options={vehicleSearchInputOptions}
+                    options={updateItemSearchInputOptions}
                     onSelect={(option) =>
                       this.setItem("twitchPrime", {
                         ...option.value,
@@ -575,7 +587,7 @@ class UpdateEdit extends React.Component<UpdateEditProps, UpdateEditState> {
                   <Form.Label>Targeted Sales</Form.Label>
                   <SearchInput
                     multi
-                    options={vehicleSearchInputOptions}
+                    options={updateItemSearchInputOptions}
                     onSelect={(option) =>
                       this.setItem("targetedSale", {
                         ...option.value,
@@ -730,6 +742,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       setUpdates,
       setVehicles,
       setMissions,
+      setProperties,
       setRedditClient,
     },
     dispatch
@@ -741,6 +754,8 @@ const mapStateToProps = (state: RootState) => ({
   vehicleSearchInputOptions: getVehiclesAsSearchInputOptions(state),
   missions: state.missions.missions,
   missionSearchInputOptions: getMissionsAsSearchInputOptions(state),
+  properties: state.properties.properties,
+  propertySearchInputOptions: getPropertiesAsSearchInputOptions(state),
   redditClient: state.reddit.redditClient,
 });
 
