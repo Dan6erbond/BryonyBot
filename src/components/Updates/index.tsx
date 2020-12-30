@@ -2,7 +2,7 @@
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Button, Card, Container, Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { bindActionCreators, compose, Dispatch } from "redux";
 import Firebase, { withFirebase } from "../../Firebase";
@@ -13,13 +13,12 @@ import Update, {
 } from "../../models/update";
 import { RootState } from "../../store";
 import { setUpdates } from "../../store/Updates";
+import "../../styles/reel.scss";
+import "../../styles/update-table.scss";
 import "./index.scss";
 import UpdateActivityElement from "./UpdateActivityElement";
 import UpdateItemElement from "./UpdateItemElement";
 
-import "./index.scss";
-import "../../styles/reel.scss";
-import "../../styles/update-table.scss";
 
 interface UpdatesProps {
   firebase?: Firebase;
@@ -62,50 +61,40 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
               data-aos="zoom-in-up"
               data-aos-duration="400"
             >
-              <div
-                className="update-title"
-              >
-                  <span
-                    className="update-title__topic text-muted"
-                  >
-                    Weekly Update
-                  </span>
-                  <span
-                    className="update-title__date"
-                  >
-                    {update.date.toLocaleString('default', { 
-                      month: 'long', day: 'numeric', year: 'numeric' 
-                    })}
-                  </span>
-                  <span
-                    className="update-title__link"
-                  >
-                    {update.redditThread && (
-                      <Button
-                        variant="link"
-                        href={
-                          "https://reddit.com/r/gtaonline/comments/" +
-                          update.redditThread
-                        }
-                        target="_blank"
-                      >
-                        <span
-                          className="update-title__link--text"
-                        >
-                          /r/gtaonline
-                        </span>
-                        <FontAwesomeIcon icon={faExternalLinkAlt} />
-                      </Button>
-                    )}
-                  </span>
+              <div className="update-title">
+                <span className="update-title__topic text-muted">
+                  Weekly Update
+                </span>
+                <span className="update-title__date">
+                  {update.date.toLocaleString("default", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+                <span className="update-title__link">
+                  {update.redditThread && (
+                    <Button
+                      variant="link"
+                      href={
+                        "https://reddit.com/r/gtaonline/comments/" +
+                        update.redditThread
+                      }
+                      target="_blank"
+                    >
+                      <span className="update-title__link--text">
+                        /r/gtaonline
+                      </span>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </Button>
+                  )}
+                </span>
               </div>
               <div className="update-table">
                 {update.podium && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                        Podium Vehicle
-                      </div>
+                      <div className="update-table__cell">Podium Vehicle</div>
                     </div>
                     <div className="update-table__column">
                       <div className="update-table__cell">
@@ -120,9 +109,7 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
                 {update.new.length !== 0 && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                        New Content
-                      </div>
+                      <div className="update-table__cell">New Content</div>
                     </div>
                     <div className="update-table__column">
                       {update.new.map((item: UpdateItem) => (
@@ -155,9 +142,7 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
                 {update.sale.length !== 0 && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                        Discounts
-                      </div>
+                      <div className="update-table__cell">Discounts</div>
                     </div>
                     <div className="update-table__column">
                       {update.sale.map((item: SaleItem) => (
@@ -187,9 +172,7 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
                 {update.targetedSale.length !== 0 && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                        Targeted Sales
-                      </div>
+                      <div className="update-table__cell">Targeted Sales</div>
                     </div>
                     <div className="update-table__column">
                       {update.targetedSale.map((item: SaleItem) => (
@@ -203,9 +186,7 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
                 {update.timeTrial && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                      Time Trial
-                      </div>
+                      <div className="update-table__cell">Time Trial</div>
                     </div>
                     <div className="update-table__column">
                       <div className="update-table__cell">
@@ -247,9 +228,7 @@ const Updates = ({ firebase, updates, setUpdates }: UpdatesProps) => {
                 {update.premiumRace && (
                   <div className="update-table__row">
                     <div className="update-table__column">
-                      <div className="update-table__cell">
-                        Premium Race
-                      </div>
+                      <div className="update-table__cell">Premium Race</div>
                     </div>
                     <div className="update-table__column">
                       <div className="update-table__cell">
