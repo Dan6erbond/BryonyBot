@@ -32,10 +32,13 @@ export function propertiesReducer(
     case "properties/SET_PROPERTY":
       return {
         ...state,
-        properties: [
-          ...state.properties.filter((p) => p.docRef !== action.payload.docRef),
-          action.payload,
-        ],
+        properties: state.properties.find(
+          (p) => p.docRef?.id === action.payload.docRef?.id
+        )
+          ? state.properties.map((p) =>
+              p.docRef?.id === action.payload.docRef?.id ? action.payload : p
+            )
+          : [...state.properties, action.payload],
       };
     default:
       return state;
