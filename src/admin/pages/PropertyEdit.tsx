@@ -51,11 +51,8 @@ const PropertyEdit = ({
   setProperty,
   match,
 }: PropertyEditProps) => {
-  const { register, handleSubmit, watch, setValue } = useForm<Property>();
+  const { register, handleSubmit, setValue } = useForm<Property>();
   const [showLocationModal, setShowLocationModal] = React.useState(false);
-
-  const nameInput = watch("name");
-  const shopSelection = watch("shop");
 
   const [saving, setSaving] = React.useState(false);
 
@@ -71,9 +68,9 @@ const PropertyEdit = ({
   const propertyAlreadyExists = React.useMemo(
     () =>
       !!properties.find(
-        (p) => p.name === nameInput && p.docRef?.id !== property.docRef?.id
+        (p) => p.name === property.name && p.docRef?.id !== property.docRef?.id
       ),
-    [property, properties, nameInput]
+    [property, properties]
   );
 
   const saveProperty = React.useCallback(
@@ -276,7 +273,7 @@ const PropertyEdit = ({
                   <option
                     key={shop}
                     value={shop}
-                    aria-selected={shop === shopSelection}
+                    aria-selected={shop === property.shop}
                   >
                     {shop}
                   </option>
